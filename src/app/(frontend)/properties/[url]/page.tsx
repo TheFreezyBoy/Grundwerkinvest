@@ -4,7 +4,7 @@ import PropertyDetailPageClient from '@/components/pages/PropertyDetailPageClien
 
 type Props = {
   params: {
-    slug: string
+    url: string
   }
 }
 export const dynamic = 'force-dynamic'
@@ -12,11 +12,12 @@ export const dynamic = 'force-dynamic'
 export default async function PropertyDetailPage({ params }: Props) {
   const resolvedParams = await params
 
-  if (!resolvedParams?.slug) {
+  console.log(54213, resolvedParams?.url)
+  if (!resolvedParams?.url) {
     return <div>5121231</div>
   }
 
-  const { slug } = resolvedParams
+  const { url } = resolvedParams
 
   if (!payload.isInitialized) {
     await payload.init({
@@ -26,10 +27,10 @@ export default async function PropertyDetailPage({ params }: Props) {
   }
 
   const res = await payload.find({
-    collection: 'properties',
+    collection: 'listings',
     where: {
-      slug: {
-        equals: slug,
+      url: {
+        equals: url,
       },
     },
     depth: 2,

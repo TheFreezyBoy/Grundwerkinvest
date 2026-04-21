@@ -70,7 +70,8 @@ export interface Config {
     users: User;
     media: Media;
     cities: City;
-    properties: Property;
+    listings: Listing;
+    listingTypes: ListingType;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -81,7 +82,8 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     cities: CitiesSelect<false> | CitiesSelect<true>;
-    properties: PropertiesSelect<false> | PropertiesSelect<true>;
+    listings: ListingsSelect<false> | ListingsSelect<true>;
+    listingTypes: ListingTypesSelect<false> | ListingTypesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -90,10 +92,10 @@ export interface Config {
   db: {
     defaultIDType: number;
   };
-  fallbackLocale: null;
+  fallbackLocale: ('false' | 'none' | 'null') | false | null | ('en' | 'de') | ('en' | 'de')[];
   globals: {};
   globalsSelect: {};
-  locale: null;
+  locale: 'en' | 'de';
   widgets: {
     collections: CollectionsWidget;
   };
@@ -172,34 +174,91 @@ export interface Media {
 export interface City {
   id: number;
   name: string;
-  slug: string;
+  url: string;
   updatedAt: string;
   createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "properties".
+ * via the `definition` "listings".
  */
-export interface Property {
+export interface Listing {
   id: number;
   title: string;
-  slug: string;
-  location: string;
-  city: number | City;
-  price: number;
-  monthlyIncome?: number | null;
-  roi?: number | null;
-  bedrooms?: number | null;
-  yearBuilt?: string | null;
-  size?: number | null;
-  garage?: string | null;
-  type?: ('Apartment' | 'Penthouse' | 'House' | 'Loft' | 'Villa' | 'Office' | 'Building') | null;
-  images?: (number | Media)[] | null;
-  description?: string | null;
-  meta?: {
-    title?: string | null;
-    description?: string | null;
+  url: string;
+  category: {
+    categoryBuy?: ('buy' | 'rent') | null;
+    categoryType?: ('live' | 'business') | null;
+    objectType?:
+      | ('house' | 'apartment' | 'land' | 'garage' | 'property' | 'office' | 'restaurants' | 'hall' | 'retail')
+      | null;
+    status: 'available' | 'marketing' | 'sold' | 'inactive' | 'paused';
+    id?: number | null;
   };
+  address?: {
+    address?: string | null;
+    houseNumber?: string | null;
+    zip?: string | null;
+    city?: string | null;
+    region?: (number | null) | ListingType;
+    /**
+     * @minItems 2
+     * @maxItems 2
+     */
+    location?: [number, number] | null;
+    doNotDisplayStreet?: boolean | null;
+  };
+  prices?: {
+    price?: number | null;
+    onRequest?: boolean | null;
+    negotiable?: boolean | null;
+  };
+  areas?: {
+    landArea?: number | null;
+    livingSpace?: number | null;
+    gardenArea?: number | null;
+    balconyArea?: number | null;
+    room?: number | null;
+    bedroom?: number | null;
+    bathroom?: number | null;
+    floor?: number | null;
+    floorNumber?: number | null;
+  };
+  additional?: {
+    construction?: number | null;
+    lastModernization?: number | null;
+    quality?: ('luxurious' | 'upscale' | 'normal' | 'simply') | null;
+    rented?: boolean | null;
+  };
+  energy?: {
+    created?: string | null;
+    until?: string | null;
+    efficiencyClass?: ('aPlusPlusPlus' | 'aPlusPlus' | 'aPlus' | 'a' | 'b' | 'c' | 'd' | 'e' | 'f' | 'g' | 'h') | null;
+  };
+  description?: {
+    description?: string | null;
+    features?: string | null;
+    other?: string | null;
+  };
+  locationDescription?: {
+    publicTransportMinutes?: number | null;
+    publicTransportDistance?: number | null;
+    autobahnMinutes?: number | null;
+    autobahnDistance?: number | null;
+    mainStationMinutes?: number | null;
+    mainStationDistance?: number | null;
+  };
+  Media?: (number | Media)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "listingTypes".
+ */
+export interface ListingType {
+  id: number;
+  name: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -240,8 +299,12 @@ export interface PayloadLockedDocument {
         value: number | City;
       } | null)
     | ({
-        relationTo: 'properties';
-        value: number | Property;
+        relationTo: 'listings';
+        value: number | Listing;
+      } | null)
+    | ({
+        relationTo: 'listingTypes';
+        value: number | ListingType;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -331,35 +394,99 @@ export interface MediaSelect<T extends boolean = true> {
  */
 export interface CitiesSelect<T extends boolean = true> {
   name?: T;
-  slug?: T;
+  url?: T;
   updatedAt?: T;
   createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "properties_select".
+ * via the `definition` "listings_select".
  */
-export interface PropertiesSelect<T extends boolean = true> {
+export interface ListingsSelect<T extends boolean = true> {
   title?: T;
-  slug?: T;
-  location?: T;
-  city?: T;
-  price?: T;
-  monthlyIncome?: T;
-  roi?: T;
-  bedrooms?: T;
-  yearBuilt?: T;
-  size?: T;
-  garage?: T;
-  type?: T;
-  images?: T;
-  description?: T;
-  meta?:
+  url?: T;
+  category?:
     | T
     | {
-        title?: T;
-        description?: T;
+        categoryBuy?: T;
+        categoryType?: T;
+        objectType?: T;
+        status?: T;
+        id?: T;
       };
+  address?:
+    | T
+    | {
+        address?: T;
+        houseNumber?: T;
+        zip?: T;
+        city?: T;
+        region?: T;
+        location?: T;
+        doNotDisplayStreet?: T;
+      };
+  prices?:
+    | T
+    | {
+        price?: T;
+        onRequest?: T;
+        negotiable?: T;
+      };
+  areas?:
+    | T
+    | {
+        landArea?: T;
+        livingSpace?: T;
+        gardenArea?: T;
+        balconyArea?: T;
+        room?: T;
+        bedroom?: T;
+        bathroom?: T;
+        floor?: T;
+        floorNumber?: T;
+      };
+  additional?:
+    | T
+    | {
+        construction?: T;
+        lastModernization?: T;
+        quality?: T;
+        rented?: T;
+      };
+  energy?:
+    | T
+    | {
+        created?: T;
+        until?: T;
+        efficiencyClass?: T;
+      };
+  description?:
+    | T
+    | {
+        description?: T;
+        features?: T;
+        other?: T;
+      };
+  locationDescription?:
+    | T
+    | {
+        publicTransportMinutes?: T;
+        publicTransportDistance?: T;
+        autobahnMinutes?: T;
+        autobahnDistance?: T;
+        mainStationMinutes?: T;
+        mainStationDistance?: T;
+      };
+  Media?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "listingTypes_select".
+ */
+export interface ListingTypesSelect<T extends boolean = true> {
+  name?: T;
   updatedAt?: T;
   createdAt?: T;
 }

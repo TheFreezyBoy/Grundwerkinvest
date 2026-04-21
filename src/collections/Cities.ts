@@ -12,20 +12,22 @@ const Cities: CollectionConfig = {
       name: 'name',
       type: 'text',
       required: true,
+      localized: true,
     },
     {
-      name: 'slug',
+      name: 'url',
       type: 'text',
       required: true,
       unique: true,
-      hooks: {
-        beforeValidate: [
-          ({ data }) => {
-            if (data?.title) {
-              return data.title.toLowerCase().replace(/\s+/g, '-')
-            }
-          },
-        ],
+      access: {
+        update: () => false,
+      },
+      validate: (value) => {
+        const slugRegex = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
+        if (!slugRegex.test(value)) {
+          return 'Url должен содержать только строчные буквы, цифры и дефисы, например "house-in-berlin"'
+        }
+        return true
       },
     },
   ],

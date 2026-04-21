@@ -51,7 +51,7 @@ tags: [payload, queries, local-api, rest, graphql]
 }
 ```
 
-## Nested Properties
+## Nested Listings
 
 ```typescript
 {

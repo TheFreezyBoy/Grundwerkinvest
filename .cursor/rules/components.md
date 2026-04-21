@@ -56,7 +56,7 @@ Instead of a string path, you can pass a config object:
 }
 ```
 
-**Config Properties:**
+**Config Listings:**
 
 | Property      | Description                                           |
 | ------------- | ----------------------------------------------------- |

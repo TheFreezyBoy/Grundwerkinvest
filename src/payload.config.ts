@@ -8,7 +8,10 @@ import sharp from 'sharp'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import Cities from '@/collections/Cities'
-import Properties from '@/collections/Properties'
+import Listings from '@/collections/Listings'
+import ListingTypes from '@/collections/ListingTypes'
+import { en } from '@payloadcms/translations/languages/en'
+import { de } from '@payloadcms/translations/languages/de'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -20,7 +23,11 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Cities, Properties],
+  localization: {
+    locales: ['en', 'de'], // required
+    defaultLocale: 'en', // required
+  },
+  collections: [Users, Media, Cities, Listings, ListingTypes],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

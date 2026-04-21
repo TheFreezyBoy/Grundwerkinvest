@@ -3,9 +3,8 @@ import Link from 'next/link'
 import { properties } from '@/data/properties'
 import { PropertyCard } from '@/components/PropertyCard'
 
-export function PropertyListings() {
-  // Show only featured properties on homepage (max 3)
-  const featuredProperties = properties.filter((p) => p.isFeatured && !p.isSold).slice(0, 3)
+export function PropertyListings({ properties: featuredProperties }) {
+  // const featuredProperties = properties.filter((p) => p.isFeatured && !p.isSold).slice(0, 4)
 
   return (
     <section id="properties" className="py-24 bg-background">
@@ -25,14 +24,14 @@ export function PropertyListings() {
           </p>
         </div>
 
-        {/* Featured Properties Grid */}
+        {/* Featured Listings Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
           {featuredProperties.map((property) => (
             <PropertyCard key={property.id} property={property} featured={true} />
           ))}
         </div>
 
-        {/* View All Properties CTA */}
+        {/* View All Listings CTA */}
         <div className="text-center">
           <Link
             href="/properties"

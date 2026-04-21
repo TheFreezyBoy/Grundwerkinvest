@@ -14,7 +14,7 @@ const metrics = [
     icon: Users,
     label: 'Occupancy Rate',
     value: '95%+',
-    description: 'Properties rented and generating income',
+    description: 'Listings rented and generating income',
     comparison: 'Industry standard: 85-90%',
     color: 'text-secondary',
     bgColor: 'bg-secondary/10',
@@ -86,7 +86,7 @@ export function WhyProfitable() {
             <h3 className="text-2xl text-white">Stability & Predictability</h3>
             <p className="text-white/90 mt-2">Why our model minimizes risk</p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-border">
             <div className="p-8">
               <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
