@@ -106,11 +106,11 @@ export function ContactForm() {
             required
             className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent bg-input-background"
           >
-            <option value="">Select range</option>
-            <option value="100-300">€100K - €300K</option>
-            <option value="300-500">€300K - €500K</option>
-            <option value="500-1000">€500K - €1M</option>
-            <option value="1000+">€1M+</option>
+            <option value="">{t('contact.formInvestmentPlaceholder')}</option>
+            <option value="100-300">{t('contact.formInvestment100to300')}</option>
+            <option value="300-500">{t('contact.formInvestment300to500')}</option>
+            <option value="500-1000">{t('contact.formInvestment500to1000')}</option>
+            <option value="1000+">{t('contact.formInvestmentOver1000')}</option>
           </select>
         </div>
       </div>
@@ -126,7 +126,7 @@ export function ContactForm() {
           onChange={handleChange}
           rows={5}
           className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent bg-input-background resize-none"
-          placeholder="Tell us about your investment goals..."
+          placeholder={t('scheduleCall.messagePlaceholder')}
         />
       </div>
 
@@ -139,7 +139,7 @@ export function ContactForm() {
       </button>
 
       <p className="text-sm text-muted-foreground mt-4 text-center">
-        We'll respond within 24 hours. All information is kept strictly confidential.
+        {t('contact.formConfidential')}
       </p>
     </form>
   )

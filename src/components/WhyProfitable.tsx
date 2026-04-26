@@ -1,47 +1,47 @@
 import { TrendingUp, Percent, Users, PieChart } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
-const metrics = [
-  {
-    icon: Percent,
-    label: 'Average Rental Yield',
-    value: '6.5%',
-    description: 'Annual rental income as percentage of objects value',
-    comparison: 'Above EU average of 4.2%',
-    color: 'text-primary',
-    bgColor: 'bg-primary/10',
-  },
-  {
-    icon: Users,
-    label: 'Occupancy Rate',
-    value: '95%+',
-    description: 'Listings rented and generating income',
-    comparison: 'Industry standard: 85-90%',
-    color: 'text-secondary',
-    bgColor: 'bg-secondary/10',
-  },
-  {
-    icon: PieChart,
-    label: 'Operating Costs',
-    value: '30%',
-    description: 'Management, maintenance, and other expenses',
-    comparison: 'Net profit margin: 70%',
-    color: 'text-accent',
-    bgColor: 'bg-accent/10',
-  },
-  {
-    icon: TrendingUp,
-    label: 'Annual ROI',
-    value: '9-12%',
-    description: 'Combined rental income and object appreciation',
-    comparison: 'Consistently outperforms inflation',
-    color: 'text-primary',
-    bgColor: 'bg-primary/10',
-  },
-];
-
 export function WhyProfitable() {
   const t = useTranslations()
+
+  const metrics = [
+    {
+      icon: Percent,
+      label: t('whyProfitable.averageRentalYieldLabel'),
+      value: '6.5%',
+      description: t('whyProfitable.averageRentalYieldDescription'),
+      comparison: t('whyProfitable.averageRentalYieldComparison'),
+      color: 'text-primary',
+      bgColor: 'bg-primary/10',
+    },
+    {
+      icon: Users,
+      label: t('whyProfitable.occupancyRateLabel'),
+      value: '95%+',
+      description: t('whyProfitable.occupancyRateDescription'),
+      comparison: t('whyProfitable.occupancyRateComparison'),
+      color: 'text-secondary',
+      bgColor: 'bg-secondary/10',
+    },
+    {
+      icon: PieChart,
+      label: t('whyProfitable.operatingCostsLabel'),
+      value: '30%',
+      description: t('whyProfitable.operatingCostsDescription'),
+      comparison: t('whyProfitable.operatingCostsComparison'),
+      color: 'text-accent',
+      bgColor: 'bg-accent/10',
+    },
+    {
+      icon: TrendingUp,
+      label: t('whyProfitable.annualROILabel'),
+      value: '9-12%',
+      description: t('whyProfitable.annualROIDescription'),
+      comparison: t('whyProfitable.annualROIComparison'),
+      color: 'text-primary',
+      bgColor: 'bg-primary/10',
+    },
+  ];
 
   return (
     <section className="py-24 bg-muted/30">
@@ -86,8 +86,8 @@ export function WhyProfitable() {
         {/* Stability Features */}
         <div className="bg-card rounded-2xl border border-border overflow-hidden shadow-lg">
           <div className="bg-gradient-to-r from-primary to-secondary px-8 py-6">
-            <h3 className="text-2xl text-white">Stability & Predictability</h3>
-            <p className="text-white/90 mt-2">Why our model minimizes risk</p>
+            <h3 className="text-2xl text-white">{t('whyProfitable.stabilityTitle')}</h3>
+            <p className="text-white/90 mt-2">{t('whyProfitable.stabilitySubtitle')}</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-border">
@@ -95,22 +95,22 @@ export function WhyProfitable() {
               <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
                 <div className="w-6 h-6 bg-primary rounded-full" />
               </div>
-              <h4 className="text-xl mb-3 text-foreground">Long-Term Contracts</h4>
+              <h4 className="text-xl mb-3 text-foreground">{t('whyProfitable.stabilityContractsTitle')}</h4>
               <p className="text-muted-foreground mb-4">
-                Average tenant stays 3-5 years, ensuring stable, predictable income streams
+                {t('whyProfitable.stabilityContractsDescription')}
               </p>
               <ul className="space-y-2">
                 <li className="flex items-start gap-2 text-sm text-muted-foreground">
                   <div className="w-1.5 h-1.5 bg-accent rounded-full mt-2" />
-                  <span>Minimum 1-year contracts</span>
+                  <span>{t('whyProfitable.stabilityContractsPoint1')}</span>
                 </li>
                 <li className="flex items-start gap-2 text-sm text-muted-foreground">
                   <div className="w-1.5 h-1.5 bg-accent rounded-full mt-2" />
-                  <span>Renewal incentives</span>
+                  <span>{t('whyProfitable.stabilityContractsPoint2')}</span>
                 </li>
                 <li className="flex items-start gap-2 text-sm text-muted-foreground">
                   <div className="w-1.5 h-1.5 bg-accent rounded-full mt-2" />
-                  <span>Strict screening process</span>
+                  <span>{t('whyProfitable.stabilityContractsPoint3')}</span>
                 </li>
               </ul>
             </div>
@@ -119,22 +119,22 @@ export function WhyProfitable() {
               <div className="w-12 h-12 bg-secondary/10 rounded-xl flex items-center justify-center mb-4">
                 <div className="w-6 h-6 bg-secondary rounded-full" />
               </div>
-              <h4 className="text-xl mb-3 text-foreground">High Demand Markets</h4>
+              <h4 className="text-xl mb-3 text-foreground">{t('whyProfitable.stabilityMarketsTitle')}</h4>
               <p className="text-muted-foreground mb-4">
-                Focus on German cities with housing shortages and growing populations
+                {t('whyProfitable.stabilityMarketsDescription')}
               </p>
               <ul className="space-y-2">
                 <li className="flex items-start gap-2 text-sm text-muted-foreground">
                   <div className="w-1.5 h-1.5 bg-accent rounded-full mt-2" />
-                  <span>Berlin, Munich, Frankfurt</span>
+                  <span>{t('whyProfitable.stabilityMarketsPoint1')}</span>
                 </li>
                 <li className="flex items-start gap-2 text-sm text-muted-foreground">
                   <div className="w-1.5 h-1.5 bg-accent rounded-full mt-2" />
-                  <span>Low vacancy rates (&lt;2%)</span>
+                  <span>{t('whyProfitable.stabilityMarketsPoint2')}</span>
                 </li>
                 <li className="flex items-start gap-2 text-sm text-muted-foreground">
                   <div className="w-1.5 h-1.5 bg-accent rounded-full mt-2" />
-                  <span>Growing job markets</span>
+                  <span>{t('whyProfitable.stabilityMarketsPoint3')}</span>
                 </li>
               </ul>
             </div>
@@ -143,22 +143,22 @@ export function WhyProfitable() {
               <div className="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center mb-4">
                 <div className="w-6 h-6 bg-accent rounded-full" />
               </div>
-              <h4 className="text-xl mb-3 text-foreground">Professional Management</h4>
+              <h4 className="text-xl mb-3 text-foreground">{t('whyProfitable.stabilityManagementTitle')}</h4>
               <p className="text-muted-foreground mb-4">
-                Expert team handles all operations, maintenance, and tenant issues
+                {t('whyProfitable.stabilityManagementDescription')}
               </p>
               <ul className="space-y-2">
                 <li className="flex items-start gap-2 text-sm text-muted-foreground">
                   <div className="w-1.5 h-1.5 bg-accent rounded-full mt-2" />
-                  <span>Preventive maintenance</span>
+                  <span>{t('whyProfitable.stabilityManagementPoint1')}</span>
                 </li>
                 <li className="flex items-start gap-2 text-sm text-muted-foreground">
                   <div className="w-1.5 h-1.5 bg-accent rounded-full mt-2" />
-                  <span>Rapid issue resolution</span>
+                  <span>{t('whyProfitable.stabilityManagementPoint2')}</span>
                 </li>
                 <li className="flex items-start gap-2 text-sm text-muted-foreground">
                   <div className="w-1.5 h-1.5 bg-accent rounded-full mt-2" />
-                  <span>Tenant satisfaction focus</span>
+                  <span>{t('whyProfitable.stabilityManagementPoint3')}</span>
                 </li>
               </ul>
             </div>

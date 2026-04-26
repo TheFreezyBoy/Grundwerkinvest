@@ -1,39 +1,67 @@
 import { Search, Hammer, Users, DollarSign, Settings, ArrowRight } from 'lucide-react';
-
-const steps = [
-  {
-    icon: Search,
-    title: 'Property Acquisition',
-    description: 'We identify and acquire high-potential residential objects in prime German locations',
-    details: ['Market analysis', 'Due diligence', 'Legal compliance', 'Negotiation'],
-  },
-  {
-    icon: Hammer,
-    title: 'Renovation & Preparation',
-    description: 'Professional renovation to maximize rental value and tenant appeal',
-    details: ['Modern upgrades', 'Quality materials', 'Energy efficiency', 'Safety standards'],
-  },
-  {
-    icon: Users,
-    title: 'Tenant Placement',
-    description: 'We find and screen reliable long-term tenants for your object',
-    details: ['Background checks', 'Credit verification', 'Legal contracts', 'Move-in coordination'],
-  },
-  {
-    icon: DollarSign,
-    title: 'Monthly Income Generation',
-    description: 'Receive consistent monthly rental income directly to your account',
-    details: ['Automated payments', 'Transparent reporting', 'Tax documentation', 'Performance tracking'],
-  },
-  {
-    icon: Settings,
-    title: 'Ongoing Management',
-    description: 'Full objects management including maintenance, tenant relations, and compliance',
-    details: ['24/7 maintenance', 'Tenant support', 'Legal compliance', 'Rent optimization'],
-  },
-];
+import { useTranslations } from 'next-intl';
 
 export function HowItWorks() {
+  const t = useTranslations();
+
+  const steps = [
+    {
+      icon: Search,
+      title: t('howItWorks.stepsAcquisitionTitle'),
+      description: t('howItWorks.stepsAcquisitionDescription'),
+      details: [
+        t('howItWorks.stepsAcquisitionDetails0'),
+        t('howItWorks.stepsAcquisitionDetails1'),
+        t('howItWorks.stepsAcquisitionDetails2'),
+        t('howItWorks.stepsAcquisitionDetails3'),
+      ],
+    },
+    {
+      icon: Hammer,
+      title: t('howItWorks.stepsRenovationTitle'),
+      description: t('howItWorks.stepsRenovationDescription'),
+      details: [
+        t('howItWorks.stepsRenovationDetails0'),
+        t('howItWorks.stepsRenovationDetails1'),
+        t('howItWorks.stepsRenovationDetails2'),
+        t('howItWorks.stepsRenovationDetails3'),
+      ],
+    },
+    {
+      icon: Users,
+      title: t('howItWorks.stepsTenantTitle'),
+      description: t('howItWorks.stepsTenantDescription'),
+      details: [
+        t('howItWorks.stepsTenantDetails0'),
+        t('howItWorks.stepsTenantDetails1'),
+        t('howItWorks.stepsTenantDetails2'),
+        t('howItWorks.stepsTenantDetails3'),
+      ],
+    },
+    {
+      icon: DollarSign,
+      title: t('howItWorks.stepsIncomeTitle'),
+      description: t('howItWorks.stepsIncomeDescription'),
+      details: [
+        t('howItWorks.stepsIncomeDetails0'),
+        t('howItWorks.stepsIncomeDetails1'),
+        t('howItWorks.stepsIncomeDetails2'),
+        t('howItWorks.stepsIncomeDetails3'),
+      ],
+    },
+    {
+      icon: Settings,
+      title: t('howItWorks.stepsManagementTitle'),
+      description: t('howItWorks.stepsManagementDescription'),
+      details: [
+        t('howItWorks.stepsManagementDetails0'),
+        t('howItWorks.stepsManagementDetails1'),
+        t('howItWorks.stepsManagementDetails2'),
+        t('howItWorks.stepsManagementDetails3'),
+      ],
+    },
+  ];
+
   return (
     <section id="how-it-works" className="py-24 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -41,13 +69,13 @@ export function HowItWorks() {
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full mb-4">
             <Settings className="w-4 h-4 text-primary" />
-            <span className="text-sm text-primary">How It Works</span>
+            <span className="text-sm text-primary">{t('howItWorks.badge')}</span>
           </div>
           <h2 className="text-4xl sm:text-5xl tracking-tight text-foreground mb-4">
-            Your Business Model, Simplified
+            {t('howItWorks.title')}
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            A complete, turn-key solution from acquisition to ongoing income
+            {t('howItWorks.subtitle')}
           </p>
         </div>
 
@@ -104,16 +132,16 @@ export function HowItWorks() {
         <div className="mt-16 text-center">
           <div className="bg-gradient-to-r from-primary to-secondary rounded-2xl p-12">
             <h3 className="text-3xl text-white mb-4">
-              Ready to Start Your Real Estate Business?
+              {t('howItWorks.ctaTitle')}
             </h3>
             <p className="text-white/90 mb-8 max-w-2xl mx-auto">
-              Let us handle everything while you enjoy passive income and long-term wealth building
+              {t('howItWorks.ctaDescription')}
             </p>
             <a
               href="properties"
               className="inline-flex items-center gap-2 px-8 py-4 bg-accent text-accent-foreground rounded-lg hover:bg-accent/90 transition-all shadow-lg"
             >
-              View Available Objects
+              {t('howItWorks.ctaButton')}
               <ArrowRight className="w-5 h-5" />
             </a>
           </div>

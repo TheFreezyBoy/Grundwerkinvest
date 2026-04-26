@@ -52,11 +52,11 @@ export function ProfitCalculator() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Calculator Input */}
           <div className="bg-white rounded-2xl p-8 shadow-2xl">
-            <h3 className="text-2xl mb-6 text-foreground">Your Investment</h3>
+            <h3 className="text-2xl mb-6 text-foreground">{t('profitCalculator.inputTitle')}</h3>
             
             <div className="mb-8">
               <label className="block mb-3 text-foreground">
-                Investment Amount
+                {t('profitCalculator.inputLabel')}
               </label>
               <div className="relative">
                 <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground text-xl">
@@ -94,22 +94,22 @@ export function ProfitCalculator() {
 
             {/* Assumptions */}
             <div className="bg-muted/50 rounded-xl p-6">
-              <h4 className="mb-4 text-foreground">Our Assumptions</h4>
+              <h4 className="mb-4 text-foreground">{t('profitCalculator.assumptionsTitle')}</h4>
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Annual Rental Yield</span>
+                  <span className="text-muted-foreground">{t('profitCalculator.assumptionsYield')}</span>
                   <span className="text-foreground">{(rentalYield * 100).toFixed(1)}%</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Occupancy Rate</span>
+                  <span className="text-muted-foreground">{t('profitCalculator.assumptionsOccupancy')}</span>
                   <span className="text-foreground">{(occupancyRate * 100).toFixed(0)}%</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Operating Costs</span>
+                  <span className="text-muted-foreground">{t('profitCalculator.assumptionsCosts')}</span>
                   <span className="text-foreground">{(operatingCostRate * 100).toFixed(0)}%</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Property Appreciation</span>
+                  <span className="text-muted-foreground">{t('profitCalculator.assumptionsAppreciation')}</span>
                   <span className="text-foreground">{(propertyAppreciation * 100).toFixed(1)}%/year</span>
                 </div>
               </div>
@@ -122,21 +122,21 @@ export function ProfitCalculator() {
             <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20">
               <div className="flex items-start justify-between mb-4">
                 <div>
-                  <div className="text-white/80 mb-1">Expected Monthly Income</div>
+                  <div className="text-white/80 mb-1">{t('profitCalculator.resultsMonthlyTitle')}</div>
                   <div className="text-5xl text-white">€{monthlyIncome.toLocaleString('de-DE', { maximumFractionDigits: 0 })}</div>
                 </div>
                 <div className="w-12 h-12 bg-accent/20 rounded-xl flex items-center justify-center">
                   <DollarSign className="w-6 h-6 text-accent" />
                 </div>
               </div>
-              <div className="text-white/70">Net operating income after all expenses</div>
+              <div className="text-white/70">{t('profitCalculator.resultsMonthlyDescription')}</div>
             </div>
 
             {/* Annual Returns */}
             <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20">
               <div className="flex items-start justify-between mb-4">
                 <div>
-                  <div className="text-white/80 mb-1">Annual ROI</div>
+                  <div className="text-white/80 mb-1">{t('profitCalculator.resultsRoiTitle')}</div>
                   <div className="text-5xl text-white">{roi.toFixed(1)}%</div>
                 </div>
                 <div className="w-12 h-12 bg-accent/20 rounded-xl flex items-center justify-center">
@@ -145,11 +145,11 @@ export function ProfitCalculator() {
               </div>
               <div className="grid grid-cols-2 gap-4 mt-6 pt-6 border-t border-white/20">
                 <div>
-                  <div className="text-white/70 text-sm mb-1">Rental Income</div>
+                  <div className="text-white/70 text-sm mb-1">{t('profitCalculator.resultsRoiRental')}</div>
                   <div className="text-2xl text-white">€{yearlyIncome.toLocaleString('de-DE', { maximumFractionDigits: 0 })}</div>
                 </div>
                 <div>
-                  <div className="text-white/70 text-sm mb-1">Appreciation</div>
+                  <div className="text-white/70 text-sm mb-1">{t('profitCalculator.resultsRoiAppreciation')}</div>
                   <div className="text-2xl text-white">€{yearlyAppreciation.toLocaleString('de-DE', { maximumFractionDigits: 0 })}</div>
                 </div>
               </div>
@@ -157,17 +157,17 @@ export function ProfitCalculator() {
 
             {/* 10-Year Projection */}
             <div className="bg-accent rounded-2xl p-8 shadow-xl">
-              <h4 className="text-accent-foreground mb-6">10-Year Total Return</h4>
+              <h4 className="text-accent-foreground mb-6">{t('profitCalculator.resultsProjectionTitle')}</h4>
               <div className="text-5xl text-accent-foreground mb-6">
                 €{tenYearTotal.toLocaleString('de-DE', { maximumFractionDigits: 0 })}
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <div className="text-accent-foreground/70 text-sm mb-1">Total Income</div>
+                  <div className="text-accent-foreground/70 text-sm mb-1">{t('profitCalculator.resultsProjectionIncome')}</div>
                   <div className="text-xl text-accent-foreground">€{tenYearIncome.toLocaleString('de-DE', { maximumFractionDigits: 0 })}</div>
                 </div>
                 <div>
-                  <div className="text-accent-foreground/70 text-sm mb-1">Object Value</div>
+                  <div className="text-accent-foreground/70 text-sm mb-1">{t('profitCalculator.resultsProjectionValue')}</div>
                   <div className="text-xl text-accent-foreground">€{tenYearValue.toLocaleString('de-DE', { maximumFractionDigits: 0 })}</div>
                 </div>
               </div>
@@ -178,15 +178,14 @@ export function ProfitCalculator() {
               href="#contact"
               className="block w-full px-8 py-4 bg-white text-primary text-center rounded-xl hover:bg-white/90 transition-all shadow-lg"
             >
-              Schedule a Consultation
+              {t('profitCalculator.cta')}
             </a>
           </div>
         </div>
 
         {/* Disclaimer */}
         <div className="mt-8 text-center text-white/60 text-sm">
-          * Projections are based on historical averages and current market conditions. 
-          Actual returns may vary. Past performance does not guarantee future results.
+          {t('profitCalculator.disclaimer')}
         </div>
       </div>
     </section>

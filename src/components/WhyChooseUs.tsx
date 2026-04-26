@@ -1,37 +1,37 @@
 import { Shield, Award, BarChart3, Users, CheckCircle2, Star } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
-const sellingPoints = [
-  {
-    icon: Shield,
-    title: 'Fully Managed Solution',
-    description: 'We handle everything from tenant screening to maintenance, so you can enjoy truly passive income',
-  },
-  {
-    icon: BarChart3,
-    title: 'Transparent Financials',
-    description: 'Real-time access to performance data, monthly reports, and complete financial transparency',
-  },
-  {
-    icon: Award,
-    title: 'Proven Track Record',
-    description: 'Over 500 objects managed, €150M+ in assets, and 95%+ client satisfaction rate',
-  },
-  {
-    icon: Users,
-    title: 'Local German Expertise',
-    description: 'Native team with deep knowledge of German real estate law, markets, and best practices',
-  },
-];
-
-const certifications = [
-  { label: 'Licensed Real Estate Broker', value: 'DE 310 646 011' },
-  { label: 'Object Management Certified', value: 'Stadt Hof' },
-  { label: 'EU Data Protection Compliant', value: 'GDPR' },
-]
-
 export function WhyChooseUs() {
   const t = useTranslations()
+
+  const sellingPoints = [
+    {
+      icon: Shield,
+      title: t('whyChooseUs.pointsManagedTitle'),
+      description: t('whyChooseUs.pointsManagedDescription'),
+    },
+    {
+      icon: BarChart3,
+      title: t('whyChooseUs.pointsFinancialsTitle'),
+      description: t('whyChooseUs.pointsFinancialsDescription'),
+    },
+    {
+      icon: Award,
+      title: t('whyChooseUs.pointsTrackRecordTitle'),
+      description: t('whyChooseUs.pointsTrackRecordDescription'),
+    },
+    {
+      icon: Users,
+      title: t('whyChooseUs.pointsExpertiseTitle'),
+      description: t('whyChooseUs.pointsExpertiseDescription'),
+    },
+  ];
+
+  const certifications = [
+    { label: t('whyChooseUs.certificationsBroker'), value: 'DE 310 646 011' },
+    { label: t('whyChooseUs.certificationsManagement'), value: 'Stadt Hof' },
+    { label: t('whyChooseUs.certificationsGdpr'), value: 'GDPR' },
+  ]
 
   return (
     <section className="py-24 bg-muted/30">
@@ -78,30 +78,30 @@ export function WhyChooseUs() {
           <div className="space-y-6">
             {/* Stats Card */}
             <div className="bg-gradient-to-br from-primary to-secondary rounded-2xl p-8 text-white">
-              <h3 className="text-2xl mb-8">By the Numbers</h3>
+              <h3 className="text-2xl mb-8">{t('whyChooseUs.statsTitle')}</h3>
               <div className="grid grid-cols-2 gap-6">
                 <div>
                   <div className="text-4xl text-accent mb-1">500+</div>
-                  <div className="text-white/80">Objects Managed</div>
+                  <div className="text-white/80">{t('whyChooseUs.statsObjectsLabel')}</div>
                 </div>
                 <div>
                   <div className="text-4xl text-accent mb-1">€150M+</div>
-                  <div className="text-white/80">Assets Under Management</div>
+                  <div className="text-white/80">{t('whyChooseUs.statsAssetsLabel')}</div>
                 </div>
                 <div>
                   <div className="text-4xl text-accent mb-1">95%</div>
-                  <div className="text-white/80">Client Satisfaction</div>
+                  <div className="text-white/80">{t('whyChooseUs.statsSatisfactionLabel')}</div>
                 </div>
                 <div>
                   <div className="text-4xl text-accent mb-1">12+</div>
-                  <div className="text-white/80">Years in Business</div>
+                  <div className="text-white/80">{t('whyChooseUs.statsYearsLabel')}</div>
                 </div>
               </div>
             </div>
 
             {/* Certifications */}
             <div className="bg-card rounded-2xl p-8 border border-border">
-              <h3 className="text-xl mb-6 text-foreground">Certifications & Compliance</h3>
+              <h3 className="text-xl mb-6 text-foreground">{t('whyChooseUs.certificationsTitle')}</h3>
               <div className="space-y-4">
                 {certifications.map((cert, index) => (
                   <div key={index} className="flex items-start gap-3">
@@ -126,9 +126,7 @@ export function WhyChooseUs() {
               ))}
             </div>
             <blockquote className="text-2xl text-foreground mb-6 leading-relaxed">
-              "Grundwerkinvest made it incredibly easy to invest in German real estate. The entire
-              process was transparent, professional, and I've been receiving consistent monthly
-              income since day one. Best investment decision I've made."
+              "{t('whyChooseUs.testimonialQuote')}"
             </blockquote>
             <div className="flex items-center gap-4">
               <div className="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center">
@@ -137,7 +135,7 @@ export function WhyChooseUs() {
               <div>
                 <div className="text-foreground">Mr. Heraclius</div>
                 <div className="text-sm text-muted-foreground">
-                  International Investor, Hof
+                  {t('whyChooseUs.testimonialRole')}
                 </div>
               </div>
             </div>

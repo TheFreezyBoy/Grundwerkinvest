@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { LineChart, Line, BarChart, Bar, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import { TrendingUp, DollarSign, Building } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 const cashFlowData = [
   { month: 'Jan', income: 2400, expenses: 800, net: 1600 },
@@ -46,6 +47,7 @@ const propertyValueData = [
 ];
 
 export function InvestmentPerformance() {
+  const t = useTranslations()
   const [activeChart, setActiveChart] = useState<'cashflow' | 'roi' | 'value'>('cashflow');
 
   return (
@@ -55,13 +57,13 @@ export function InvestmentPerformance() {
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-accent/10 rounded-full mb-4">
             <TrendingUp className="w-4 h-4 text-accent" />
-            <span className="text-sm text-accent-foreground">Investment Performance</span>
+            <span className="text-sm text-accent-foreground">{t('performance.badge')}</span>
           </div>
           <h2 className="text-4xl sm:text-5xl tracking-tight text-foreground mb-4">
-            Proven Track Record
+            {t('performance.title')}
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Real data from our portfolio of managed objects across Germany
+            {t('performance.subtitle')}
           </p>
         </div>
 
@@ -72,8 +74,8 @@ export function InvestmentPerformance() {
               <DollarSign className="w-6 h-6 text-primary" />
             </div>
             <div className="text-4xl mb-2 text-foreground">€2,650</div>
-            <div className="text-muted-foreground mb-1">Avg. Monthly Income</div>
-            <div className="text-sm text-accent">+12% from last year</div>
+            <div className="text-muted-foreground mb-1">{t('performance.statsMonthlyIncomeLabel')}</div>
+            <div className="text-sm text-accent">{t('performance.statsMonthlyIncomeComparison')}</div>
           </div>
 
           <div className="bg-card rounded-2xl p-8 border border-border shadow-sm hover:shadow-md transition-shadow">
@@ -81,8 +83,8 @@ export function InvestmentPerformance() {
               <TrendingUp className="w-6 h-6 text-secondary" />
             </div>
             <div className="text-4xl mb-2 text-foreground">9.8%</div>
-            <div className="text-muted-foreground mb-1">Average Annual ROI</div>
-            <div className="text-sm text-accent">Above market average</div>
+            <div className="text-muted-foreground mb-1">{t('performance.statsRoiLabel')}</div>
+            <div className="text-sm text-accent">{t('performance.statsRoiComparison')}</div>
           </div>
 
           <div className="bg-card rounded-2xl p-8 border border-border shadow-sm hover:shadow-md transition-shadow">
@@ -90,8 +92,8 @@ export function InvestmentPerformance() {
               <Building className="w-6 h-6 text-accent" />
             </div>
             <div className="text-4xl mb-2 text-foreground">+42%</div>
-            <div className="text-muted-foreground mb-1">Objects Value Growth</div>
-            <div className="text-sm text-accent">Over 10 years</div>
+            <div className="text-muted-foreground mb-1">{t('performance.statsValueGrowthLabel')}</div>
+            <div className="text-sm text-accent">{t('performance.statsValueGrowthComparison')}</div>
           </div>
         </div>
 
@@ -107,7 +109,7 @@ export function InvestmentPerformance() {
                     : 'text-muted-foreground hover:text-foreground'
                 }`}
               >
-                Monthly Cash Flow
+                {t('performance.chartsCashflowTab')}
               </button>
               <button
                 onClick={() => setActiveChart('roi')}
@@ -117,7 +119,7 @@ export function InvestmentPerformance() {
                     : 'text-muted-foreground hover:text-foreground'
                 }`}
               >
-                ROI Over 10 Years
+                {t('performance.chartsRoiTab')}
               </button>
               <button
                 onClick={() => setActiveChart('value')}
@@ -127,7 +129,7 @@ export function InvestmentPerformance() {
                     : 'text-muted-foreground hover:text-foreground'
                 }`}
               >
-                Objects Value Growth
+                {t('performance.chartsValueTab')}
               </button>
             </div>
           </div>
@@ -136,8 +138,8 @@ export function InvestmentPerformance() {
             {activeChart === 'cashflow' && (
               <div>
                 <div className="mb-6">
-                  <h3 className="text-xl mb-2">Expected Monthly Cash Flow</h3>
-                  <p className="text-muted-foreground">Average property generating €2,500+ monthly income</p>
+                  <h3 className="text-xl mb-2">{t('performance.chartsCashflowTitle')}</h3>
+                  <p className="text-muted-foreground">{t('performance.chartsCashflowDescription')}</p>
                 </div>
                 <ResponsiveContainer width="100%" height={400}>
                   <BarChart data={cashFlowData}>
@@ -152,9 +154,9 @@ export function InvestmentPerformance() {
                       }}
                     />
                     <Legend />
-                    <Bar dataKey="income" fill="#0f3460" name="Rental Income" radius={[8, 8, 0, 0]} />
-                    <Bar dataKey="expenses" fill="#d4a574" name="Operating Costs" radius={[8, 8, 0, 0]} />
-                    <Bar dataKey="net" fill="#1b4332" name="Net Profit" radius={[8, 8, 0, 0]} />
+                    <Bar dataKey="income" fill="#0f3460" name={t('performance.chartsCashflowIncome')} radius={[8, 8, 0, 0]} />
+                    <Bar dataKey="expenses" fill="#d4a574" name={t('performance.chartsCashflowExpenses')} radius={[8, 8, 0, 0]} />
+                    <Bar dataKey="net" fill="#1b4332" name={t('performance.chartsCashflowNet')} radius={[8, 8, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -163,8 +165,8 @@ export function InvestmentPerformance() {
             {activeChart === 'roi' && (
               <div>
                 <div className="mb-6">
-                  <h3 className="text-xl mb-2">Return on Investment Timeline</h3>
-                  <p className="text-muted-foreground">Projected ROI based on €300,000 initial investment</p>
+                  <h3 className="text-xl mb-2">{t('performance.chartsRoiTitle')}</h3>
+                  <p className="text-muted-foreground">{t('performance.chartsRoiDescription')}</p>
                 </div>
                 <ResponsiveContainer width="100%" height={400}>
                   <LineChart data={roiData}>
@@ -184,7 +186,7 @@ export function InvestmentPerformance() {
                       dataKey="roi"
                       stroke="#0f3460"
                       strokeWidth={3}
-                      name="Annual ROI %"
+                      name={t('performance.chartsRoiAnnual')}
                       dot={{ fill: '#0f3460', r: 5 }}
                     />
                     <Line
@@ -192,7 +194,7 @@ export function InvestmentPerformance() {
                       dataKey="cumulative"
                       stroke="#d4a574"
                       strokeWidth={3}
-                      name="Cumulative ROI %"
+                      name={t('performance.chartsRoiCumulative')}
                       dot={{ fill: '#d4a574', r: 5 }}
                     />
                   </LineChart>
@@ -203,8 +205,8 @@ export function InvestmentPerformance() {
             {activeChart === 'value' && (
               <div>
                 <div className="mb-6">
-                  <h3 className="text-xl mb-2">German Objects Value Growth</h3>
-                  <p className="text-muted-foreground">Historical object values in major German cities (indexed to €1,000)</p>
+                  <h3 className="text-xl mb-2">{t('performance.chartsValueTitle')}</h3>
+                  <p className="text-muted-foreground">{t('performance.chartsValueDescription')}</p>
                 </div>
                 <ResponsiveContainer width="100%" height={400}>
                   <AreaChart data={propertyValueData}>
@@ -231,7 +233,7 @@ export function InvestmentPerformance() {
                       strokeWidth={3}
                       fillOpacity={1}
                       fill="url(#colorValue)"
-                      name="Object Value Index"
+                      name={t('performance.chartsValueLabel')}
                     />
                   </AreaChart>
                 </ResponsiveContainer>
