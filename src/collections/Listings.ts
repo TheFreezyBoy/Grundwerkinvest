@@ -3,6 +3,10 @@ import { CollectionConfig } from 'payload'
 
 const Listings: CollectionConfig = {
   slug: 'listings',
+  admin: {
+    useAsTitle: 'title',
+    defaultColumns: ['title', 'address.city', 'category.status', 'updatedAt', 'createdAt'],
+  },
   fields: [
     {
       name: 'title',
