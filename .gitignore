@@ -1,16 +1,24 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
 # dependencies
 /node_modules
 /.pnp
 .pnp.js
 .yarn/install-state.gz
 
-/.idea/*
-!/.idea/runConfigurations
+# IDEs
+/.idea
+/.vscode
+*.swp
+*.swo
+.project
+.settings
+.classpath
 
 # testing
 /coverage
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
 
 # next.js
 /.next/
@@ -22,14 +30,19 @@
 # misc
 .DS_Store
 *.pem
-
-# debug
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
 
 # local env files
-.env*.local
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+test.env
 
 # vercel
 .vercel
@@ -38,14 +51,11 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-.env
-
+# Payload CMS
 /media
-
-# Playwright
-node_modules/
-/test-results/
-/playwright-report/
-/blob-report/
-/playwright/.cache/
 translations/.en-snapshot.json
+# Generated import map usually shouldn't be committed if it's dynamic
+src/app/(payload)/admin/importMap.js
+
+# Docker
+.docker

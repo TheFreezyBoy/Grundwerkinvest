@@ -14,6 +14,15 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 
 export async function generateMetadata(): Promise<Metadata> {
+  const icons: Metadata['icons'] = {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/logo.svg', type: 'image/svg+xml' },
+    ],
+    shortcut: '/favicon.ico',
+    apple: '/logo.svg',
+  }
+
   try {
     const locale = (await getLocale()) as Locale
     const payload = await getPayload({ config })
@@ -38,9 +47,7 @@ export async function generateMetadata(): Promise<Metadata> {
       description,
       keywords: keywords?.split(',').map((k: string) => k.trim()),
       robots,
-      icons: {
-        icon: '/favicon.ico',
-      },
+      icons,
       openGraph: {
         title,
         description,
@@ -58,7 +65,9 @@ export async function generateMetadata(): Promise<Metadata> {
       },
     }
   } catch {
-    return {}
+    return {
+      icons,
+    }
   }
 }
 
