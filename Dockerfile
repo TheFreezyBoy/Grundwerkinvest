@@ -19,8 +19,8 @@ COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
 RUN \
   if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
   elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm i --frozen-lockfile; \
-  elif [ -f package-lock.json ]; then npm ci; \
-  else echo "Lockfile not found. Running npm install instead..." && npm install; \
+  elif [ -f package-lock.json ]; then npm ci --legacy-peer-deps; \
+  else echo "Lockfile not found. Running npm install instead..." && npm install --legacy-peer-deps; \
   fi
 
 
