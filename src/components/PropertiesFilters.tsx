@@ -11,7 +11,7 @@ import {
 } from 'lucide-react'
 
 interface Props {
-  cities: string[]
+  cities: { id: string; name: string }[]
   currentCity: string
   currentBudget: string
   currentSort: string
@@ -122,15 +122,15 @@ export function PropertiesFilters({
               </button>
               {cities.map((city) => (
                 <button
-                  key={city}
-                  onClick={() => setParam('city', city)}
+                  key={city.id}
+                  onClick={() => setParam('city', city.id)}
                   className={`px-3 py-2 rounded-lg text-left text-sm transition-all ${
-                    currentCity === city
+                    currentCity === city.id
                       ? 'bg-primary text-primary-foreground'
                       : 'bg-muted text-muted-foreground hover:bg-muted/80'
                   }`}
                 >
-                  {city}
+                  {city.name}
                 </button>
               ))}
             </div>

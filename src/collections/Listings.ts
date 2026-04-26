@@ -218,7 +218,7 @@ const Listings: CollectionConfig = {
                 {
                   name: 'region',
                   type: 'relationship',
-                  relationTo: 'listingTypes',
+                  relationTo: 'cities',
                   label: 'Region',
                 },
                 {

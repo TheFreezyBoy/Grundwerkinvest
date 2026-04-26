@@ -1,6 +1,6 @@
 import { getPayload } from 'payload'
 import config from '@payload-config'
-import { getTranslations } from 'next-intl/server'
+import { getTranslations, getLocale } from 'next-intl/server'
 import { Building2 } from 'lucide-react'
 import { PropertyCard } from '@/components/PropertyCard'
 import { PropertiesFilters } from '@/components/PropertiesFilters'
@@ -27,6 +27,7 @@ export default async function PropertiesPage({
 }) {
   const params = await searchParams
   const t = await getTranslations('properties')
+  const locale = await getLocale()
   const payload = await getPayload({ config })
 
   const city = params.city || ''
@@ -39,7 +40,7 @@ export default async function PropertiesPage({
   const andClauses: Where[] = []
 
   if (city && city !== 'all') {
-    andClauses.push({ 'address.city': { equals: city } })
+    andClauses.push({ 'address.region': { equals: city } })
   }
 
   if (!showSold) {
@@ -75,7 +76,7 @@ export default async function PropertiesPage({
         page,
         depth: 2,
       }),
-      payload.find({ collection: 'cities', limit: 100 }),
+      payload.find({ collection: 'cities', limit: 100, locale: locale as 'de' | 'en' }),
       // Total available count (not affected by filters)
       payload.find({
         collection: 'listings',
@@ -84,7 +85,7 @@ export default async function PropertiesPage({
       }),
     ])
 
-    const cities = citiesRes.docs.map((c: { name: string }) => c.name)
+    const cities = citiesRes.docs.map((c: { id: string; name: string }) => ({ id: String(c.id), name: c.name }))
     const { docs: properties, totalDocs, totalPages } = listingsRes
     const totalAvailable = totalAvailableRes.totalDocs
 
@@ -104,9 +105,7 @@ export default async function PropertiesPage({
             <div className="flex items-center gap-3 md:gap-4">
               <div className="bg-white/10 backdrop-blur-sm rounded-lg px-4 py-2 border border-white/20">
                 <div className="text-xs text-white/70">{t('available')}</div>
-                <div className="text-xl md:text-2xl text-white font-semibold">
-                  {totalAvailable}
-                </div>
+                <div className="text-xl md:text-2xl text-white font-semibold">{totalAvailable}</div>
               </div>
               <div className="hidden sm:block bg-white/10 backdrop-blur-sm rounded-lg px-4 py-2 border border-white/20">
                 <div className="text-xs text-white/70">{t('cities')}</div>
@@ -119,7 +118,7 @@ export default async function PropertiesPage({
 
       <section className="py-8 md:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex gap-6 lg:gap-8 flex-col">
+          <div className="flex gap-6 lg:gap-8 lg:flex-row flex-col">
             {/* Sidebar filters */}
             <PropertiesFilters
               cities={cities}
@@ -141,11 +140,7 @@ export default async function PropertiesPage({
                 <>
                   <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6">
                     {properties.map((property) => (
-                      <PropertyCard
-                        key={property.id}
-                        property={property}
-                        featured={false}
-                      />
+                      <PropertyCard key={property.id} property={property} featured={false} />
                     ))}
                   </div>
 

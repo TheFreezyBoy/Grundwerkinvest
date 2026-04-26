@@ -71,7 +71,6 @@ export interface Config {
     media: Media;
     cities: City;
     listings: Listing;
-    listingTypes: ListingType;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -83,7 +82,6 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     cities: CitiesSelect<false> | CitiesSelect<true>;
     listings: ListingsSelect<false> | ListingsSelect<true>;
-    listingTypes: ListingTypesSelect<false> | ListingTypesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -204,7 +202,7 @@ export interface Listing {
     houseNumber?: string | null;
     zip?: string | null;
     city?: string | null;
-    region?: (number | null) | ListingType;
+    region?: (number | null) | City;
     /**
      * @minItems 2
      * @maxItems 2
@@ -258,16 +256,6 @@ export interface Listing {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "listingTypes".
- */
-export interface ListingType {
-  id: number;
-  name: string;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -305,10 +293,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'listings';
         value: number | Listing;
-      } | null)
-    | ({
-        relationTo: 'listingTypes';
-        value: number | ListingType;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -482,15 +466,6 @@ export interface ListingsSelect<T extends boolean = true> {
         mainStationDistance?: T;
       };
   Media?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "listingTypes_select".
- */
-export interface ListingTypesSelect<T extends boolean = true> {
-  name?: T;
   updatedAt?: T;
   createdAt?: T;
 }
