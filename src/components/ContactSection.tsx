@@ -27,7 +27,12 @@ export function ContactSection() {
                 </div>
                 <div>
                   <div className="text-sm text-muted-foreground mb-1">{t('contact.email')}</div>
-                  <div className="text-xl font-bold text-foreground">invest@grundwerkinvest.de</div>
+                  <a
+                    href="mailto:invest@grundwerkinvest.de"
+                    className="text-xl font-bold text-foreground hover:text-accent transition-colors"
+                  >
+                    invest@grundwerkinvest.de
+                  </a>
                 </div>
               </div>
 
@@ -37,7 +42,12 @@ export function ContactSection() {
                 </div>
                 <div>
                   <div className="text-sm text-muted-foreground mb-1">{t('contact.phone')}</div>
-                  <div className="text-xl font-bold text-foreground">+49 9280 7089 839</div>
+                  <a
+                    href="tel:+4992807089839"
+                    className="text-xl font-bold text-foreground hover:text-accent transition-colors"
+                  >
+                    +49 9280 7089 839
+                  </a>
                 </div>
               </div>
 

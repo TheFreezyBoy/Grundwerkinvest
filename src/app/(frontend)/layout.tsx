@@ -180,8 +180,16 @@ export default async function Layout({ children }: { children: React.ReactNode }
                     <ul className="space-y-2 text-primary-foreground/80">
                       <li>Alexander Unrein</li>
                       <li>Selbitz, Germany</li>
-                      <li>+49 9280 7089 839</li>
-                      <li>info@grundwerkinvest.de</li>
+                      <li>
+                        <a href="tel:+4992807089839" className="hover:text-accent transition-colors">
+                          +49 9280 7089 839
+                        </a>
+                      </li>
+                      <li>
+                        <a href="mailto:info@grundwerkinvest.de" className="hover:text-accent transition-colors">
+                          info@grundwerkinvest.de
+                        </a>
+                      </li>
                     </ul>
                   </div>
                 </div>
