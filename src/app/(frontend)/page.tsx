@@ -9,19 +9,19 @@ import { PropertyListings } from '@/components/PropertyListings'
 import { ProfitCalculator } from '@/components/ProfitCalculator'
 import { Testimonials } from '@/components/Testimonials'
 import { ContactSection } from '@/components/ContactSection'
-import payload from 'payload'
-import config from '@/payload.config'
+import { getPayload } from 'payload'
+import config from '@payload-config'
 
 const HomePage = async () => {
-  // Server-side fetch
+  const payload = await getPayload({ config })
 
   const res = await payload.find({
-    collection: 'listings', // твоя коллекция
+    collection: 'listings',
     limit: 4,
     where: {
-      isFeatured: true,
-      isSold: false,
+      'category.status': { not_equals: 'sold' },
     },
+    sort: '-createdAt',
     depth: 2,
   })
 
@@ -31,8 +31,8 @@ const HomePage = async () => {
     <>
       <HeroSection />
       <PropertyListings properties={properties} />
-      <InvestmentPerformance />
-      <HowItWorks />
+      {/*<InvestmentPerformance />*/}
+      {/*<HowItWorks />*/}
       <WhyProfitable />
       <WhyGermany />
       <WhyChooseUs />

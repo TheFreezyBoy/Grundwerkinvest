@@ -1,46 +1,29 @@
-import payload from 'payload'
-import config from '@payload-config'
 import PropertyDetailPageClient from '@/components/pages/PropertyDetailPageClient'
+import { getPayload } from 'payload'
+import config from '@payload-config'
+import { notFound } from 'next/navigation'
 
-type Props = {
-  params: {
-    url: string
-  }
-}
 export const dynamic = 'force-dynamic'
 
-export default async function PropertyDetailPage({ params }: Props) {
-  const resolvedParams = await params
+export default async function PropertyDetailPage({
+  params,
+}: {
+  params: Promise<{ url: string }>
+}) {
+  const { url } = await params
+  if (!url) notFound()
 
-  console.log(54213, resolvedParams?.url)
-  if (!resolvedParams?.url) {
-    return <div>5121231</div>
-  }
-
-  const { url } = resolvedParams
-
-  if (!payload.isInitialized) {
-    await payload.init({
-      secret: process.env.PAYLOAD_SECRET!,
-      config,
-    })
-  }
+  const payload = await getPayload({ config })
 
   const res = await payload.find({
     collection: 'listings',
-    where: {
-      url: {
-        equals: url,
-      },
-    },
+    where: { url: { equals: url } },
     depth: 2,
   })
 
   const property = res.docs[0]
+  if (!property) notFound()
 
-  if (!property) {
-    return <div className="p-10">Not found</div>
-  }
-
-  return <PropertyDetailPageClient property={property} />
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return <PropertyDetailPageClient property={property as any} />
 }

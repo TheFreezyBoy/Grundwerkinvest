@@ -1,16 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
-import payload from 'payload'
-import payloadConfig from '@payload-config'
+import { getPayload } from 'payload'
+import config from '@payload-config'
 
 export async function GET(req: NextRequest) {
-  if (!payload.isInitialized) {
-    await payload.init({
-      secret: process.env.PAYLOAD_SECRET,
-      mongoURL: process.env.DATABASE_URL,
-      config: payloadConfig,
-      express: null,
-    })
-  }
+  const payload = await getPayload({ config })
 
   const { searchParams } = new URL(req.url)
   const cityFilter = searchParams.get('city')

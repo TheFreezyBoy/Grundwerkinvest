@@ -22,7 +22,8 @@ const Cities: CollectionConfig = {
       access: {
         update: () => false,
       },
-      validate: (value) => {
+      validate: (value: string | string[] | null | undefined) => {
+        if (typeof value !== 'string') return true
         const slugRegex = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
         if (!slugRegex.test(value)) {
           return 'Url должен содержать только строчные буквы, цифры и дефисы, например "house-in-berlin"'

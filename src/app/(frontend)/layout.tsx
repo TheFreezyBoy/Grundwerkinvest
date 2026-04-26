@@ -1,129 +1,204 @@
 import { Building2, Shield } from 'lucide-react'
-// import { Outlet, useLocation } from 'react-router'
 import Link from 'next/link'
 import '@/styles/index.css'
+import { getTranslations, getMessages, getLocale } from 'next-intl/server'
+import { NextIntlClientProvider } from 'next-intl'
+import { LanguageDropdown } from '@/components/LanguageDropdown'
+import { ScheduleCallProvider } from '@/context/ScheduleCallContext'
+import { ScheduleCallModal } from '@/components/ScheduleCallModal'
+import { NavScheduleCallButton } from '@/components/NavScheduleCallButton'
+import { MobileMenu } from '@/components/MobileMenu'
+import type { Locale } from '@/i18n/config'
+import type { Metadata } from 'next'
+import { getPayload } from 'payload'
+import config from '@payload-config'
 
-export default function Layout({ children }) {
+export async function generateMetadata(): Promise<Metadata> {
+  try {
+    const locale = (await getLocale()) as Locale
+    const payload = await getPayload({ config })
+    const seo = await payload.findGlobal({ slug: 'seo' }).catch(() => null)
+    const t = await getTranslations('seo')
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const seoAny = seo as any
+    const title = seoAny?.[`title_${locale}`] || t('defaultTitle')
+    const description = seoAny?.[`description_${locale}`] || t('defaultDescription')
+    const keywords = seoAny?.[`keywords_${locale}`]
+    const ogImage = seoAny?.ogImage?.url
+    const siteName = seoAny?.siteName || 'Grundwerkinvest'
+    const twitterHandle = seoAny?.twitterHandle
+    const robotsIndex = seoAny?.robotsIndex !== false
+    const robotsFollow = seoAny?.robotsFollow !== false
+
+    const robots = `${robotsIndex ? 'index' : 'noindex'}, ${robotsFollow ? 'follow' : 'nofollow'}`
+
+    return {
+      title,
+      description,
+      keywords: keywords?.split(',').map((k: string) => k.trim()),
+      robots,
+      icons: {
+        icon: '/favicon.ico',
+      },
+      openGraph: {
+        title,
+        description,
+        siteName,
+        images: ogImage ? [{ url: ogImage, width: 1200, height: 630 }] : undefined,
+        locale: locale === 'de' ? 'de_DE' : 'en_US',
+        type: 'website',
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title,
+        description,
+        images: ogImage ? [ogImage] : undefined,
+        site: twitterHandle,
+      },
+    }
+  } catch {
+    return {}
+  }
+}
+
+export default async function Layout({ children }: { children: React.ReactNode }) {
+  const locale = (await getLocale()) as Locale
+  const t = await getTranslations()
+  const messages = await getMessages()
 
   return (
-    <html>
+    <html lang={locale}>
       <body>
-        <div className="min-h-screen bg-background">
-          {/* Navigation */}
-          <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-border">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="flex items-center justify-between h-20">
-                <Link href="/" className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-                    <Building2 className="w-6 h-6 text-primary-foreground" />
-                  </div>
-                  <div>
-                    <div className="text-xl tracking-tight text-primary">Grundwerkinvest</div>
-                    <div className="text-xs text-muted-foreground">Real Estate Business</div>
-                  </div>
-                </Link>
-
-                <div className="hidden md:flex items-center gap-8">
-                  <Link
-                    href="/properties"
-                    className="text-sm text-foreground hover:text-primary transition-colors"
-                  >
-                    All Objects
-                  </Link>
-                  <a
-                    href="#contact"
-                    className="px-6 py-2.5 bg-accent text-accent-foreground rounded-lg hover:bg-accent/90 transition-colors"
-                  >
-                    Schedule Call
-                  </a>
-                </div>
-              </div>
-            </div>
-          </nav>
-
-          {/* Main Content */}
-          <main className="pt-20">{children}</main>
-
-          {/* Footer */}
-          <footer className="bg-primary text-primary-foreground">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
-                <div className="col-span-1 md:col-span-2">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-10 h-10 bg-accent rounded-lg flex items-center justify-center">
-                      <Building2 className="w-6 h-6 text-accent-foreground" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'RealEstateAgent',
+              name: 'Grundwerkinvest',
+              description: t('footer.tagline'),
+              url: 'https://grundwerkinvest.de',
+              telephone: '+49-9280-7089839',
+              email: 'info@grundwerkinvest.de',
+              address: {
+                '@type': 'PostalAddress',
+                streetAddress: 'Walter-Hümmer-Str. 10',
+                addressLocality: 'Selbitz',
+                postalCode: '95152',
+                addressCountry: 'DE',
+              },
+              areaServed: {
+                '@type': 'Country',
+                name: 'Germany',
+              },
+            }),
+          }}
+        />
+        <NextIntlClientProvider messages={messages} locale={locale}>
+        <ScheduleCallProvider>
+          <div className="min-h-screen bg-background">
+            {/* Navigation */}
+            <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-border">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="flex items-center justify-between h-16">
+                  {/* Logo */}
+                  <Link href="/" className="flex items-center gap-2.5">
+                    <div className="w-9 h-9 flex items-center justify-center">
+                      <img src="/logo.svg" alt="Grundwerkinvest" className="w-9 h-9" />
                     </div>
-                    <div className="text-xl tracking-tight">Grundwerkinvest</div>
-                  </div>
-                  <p className="text-primary-foreground/80 max-w-md mb-6">
-                    Your trusted partner for ready-made real estate investment businesses in
-                    Germany. Secure, profitable, and fully managed.
-                  </p>
-                  <div className="flex items-center gap-4">
-                    <Shield className="w-5 h-5 text-accent" />
-                    <span className="text-sm text-primary-foreground/80">Licensed & Regulated</span>
-                  </div>
-                </div>
+                    <span className="text-lg font-semibold tracking-tight text-primary">
+                      Grundwerkinvest
+                    </span>
+                  </Link>
 
-                <div>
-                  <h4 className="mb-4">Quick Links</h4>
-                  <ul className="space-y-2">
-                    <li>
-                    </li>
-                    <li>
-                      <Link
-                        href="/properties"
-                        className="text-primary-foreground/80 hover:text-accent transition-colors"
-                      >
-                        All Properties
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
+                  {/* Desktop nav */}
+                  <div className="hidden md:flex items-center gap-4">
+                    <Link
+                      href="/properties"
+                      className="px-4 py-2 text-sm font-medium text-foreground hover:text-primary transition-colors"
+                    >
+                      {t('nav.allObjects')}
+                    </Link>
+                    <NavScheduleCallButton label={t('nav.scheduleCall')} />
+                  </div>
 
-                <div>
-                  <h4 className="mb-4">Contact</h4>
-                  <ul className="space-y-2 text-primary-foreground/80">
-                    <li>Alexander Unrian</li>
-                    <li>Selbitz, Germany</li>
-                    <li>+49 173 4194304</li>
-                    <li>info@grundwerkinvest.de</li>
-                  </ul>
+                  {/* Mobile nav */}
+                  <div className="flex md:hidden items-center gap-2">
+                    <MobileMenu locale={locale} />
+                  </div>
                 </div>
               </div>
+            </nav>
 
-              <div className="border-t border-primary-foreground/20 mt-12 pt-8 text-center text-primary-foreground/60">
-                <p>
-                  © 2026 Grundwerkinvest. All rights reserved. | Privacy Policy | Terms of Service
-                </p>
+            <main className="pt-16">{children}</main>
+
+            {/* Footer */}
+            <footer className="bg-primary text-primary-foreground">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+                  <div className="col-span-1 md:col-span-2">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-10 h-10 flex items-center justify-center">
+                        <img src="/logo.svg" alt="Grundwerkinvest" className="w-10 h-10" />
+                      </div>
+                      <div className="text-xl tracking-tight">Grundwerkinvest</div>
+                    </div>
+                    <p className="text-primary-foreground/80 max-w-md mb-6">
+                      {t('footer.tagline')}
+                    </p>
+                    <div className="flex items-center gap-4">
+                      <Shield className="w-5 h-5 text-accent" />
+                      <span className="text-sm text-primary-foreground/80">{t('footer.licensed')}</span>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h4 className="mb-4">{t('footer.quickLinks')}</h4>
+                    <ul className="space-y-2">
+                      <li>
+                        <Link
+                          href="/properties"
+                          className="text-primary-foreground/80 hover:text-accent transition-colors"
+                        >
+                          {t('footer.allProperties')}
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          href="/impressum"
+                          className="text-primary-foreground/80 hover:text-accent transition-colors"
+                        >
+                          {t('footer.impressum')}
+                        </Link>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h4 className="mb-4">{t('footer.contact')}</h4>
+                    <ul className="space-y-2 text-primary-foreground/80">
+                      <li>Alexander Unrein</li>
+                      <li>Selbitz, Germany</li>
+                      <li>+49 9280 7089 839</li>
+                      <li>info@grundwerkinvest.de</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="border-t border-primary-foreground/20 mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+                  <p className="text-primary-foreground/60 text-center sm:text-left">{t('footer.rights')}</p>
+                  <LanguageDropdown currentLocale={locale} />
+                </div>
               </div>
-            </div>
-          </footer>
-        </div>
+            </footer>
+          </div>
+
+          {/* Global modal - rendered once at root */}
+          <ScheduleCallModal />
+        </ScheduleCallProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   )
 }
-
-
-
-// import React from 'react'
-// // import './styles.css'
-// import '@/styles/tailwind.css'
-//
-// export const metadata = {
-//   description: 'A blank template using Payload in a Next.js app.',
-//   title: 'Payload Blank Template',
-// }
-//
-// export default async function RootLayout(props: { children: React.ReactNode }) {
-//   const { children } = props
-//
-//   return (
-//     <html lang="en">
-//       <body>
-//         <main>{children}</main>
-//       </body>
-//     </html>
-//   )
-// }

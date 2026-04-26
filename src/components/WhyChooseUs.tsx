@@ -1,4 +1,5 @@
-import { Shield, Award, BarChart3, Users, CheckCircle2, Star } from 'lucide-react';
+import { Shield, Award, BarChart3, Users, CheckCircle2, Star } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 const sellingPoints = [
   {
@@ -24,13 +25,14 @@ const sellingPoints = [
 ];
 
 const certifications = [
-  { label: 'Licensed Real Estate Broker', value: 'DE-2019-4758' },
-  { label: 'Object Management Certified', value: 'IHK Berlin' },
+  { label: 'Licensed Real Estate Broker', value: 'DE 310 646 011' },
+  { label: 'Object Management Certified', value: 'Stadt Hof' },
   { label: 'EU Data Protection Compliant', value: 'GDPR' },
-  { label: 'Member of IVD', value: 'German Real Estate Association' },
-];
+]
 
 export function WhyChooseUs() {
+  const t = useTranslations()
+
   return (
     <section className="py-24 bg-muted/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -38,13 +40,13 @@ export function WhyChooseUs() {
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full mb-4">
             <Star className="w-4 h-4 text-primary" />
-            <span className="text-sm text-primary">Why Choose Us</span>
+            <span className="text-sm text-primary">{t('whyChooseUs.badge')}</span>
           </div>
           <h2 className="text-4xl sm:text-5xl tracking-tight text-foreground mb-4">
-            Your Trusted Partner
+            {t('whyChooseUs.title')}
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Experience, transparency, and results you can count on
+            {t('whyChooseUs.subtitle')}
           </p>
         </div>
 

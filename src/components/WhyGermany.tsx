@@ -1,4 +1,5 @@
-import { TrendingUp, Shield, Users, Building2, Euro, Award } from 'lucide-react';
+import { TrendingUp, Shield, Users, Building2, Euro, Award } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 const reasons = [
   {
@@ -40,6 +41,8 @@ const reasons = [
 ];
 
 export function WhyGermany() {
+  const t = useTranslations()
+
   return (
     <section className="py-24 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -47,13 +50,13 @@ export function WhyGermany() {
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-secondary/10 rounded-full mb-4">
             <Building2 className="w-4 h-4 text-secondary" />
-            <span className="text-sm text-secondary">Why Germany</span>
+            <span className="text-sm text-secondary">{t('whyGermany.badge')}</span>
           </div>
           <h2 className="text-4xl sm:text-5xl tracking-tight text-foreground mb-4">
-            Why Invest in Germany?
+            {t('whyGermany.title')}
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            One of the world's safest and most profitable real estate markets
+            {t('whyGermany.subtitle')}
           </p>
         </div>
 

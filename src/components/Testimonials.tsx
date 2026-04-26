@@ -1,4 +1,5 @@
-import { Star, Quote, TrendingUp } from 'lucide-react';
+import { Star, Quote, TrendingUp } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 interface Testimonial {
   name: string;
@@ -56,6 +57,8 @@ const caseStudy = {
 };
 
 export function Testimonials() {
+  const t = useTranslations()
+
   return (
     <section className="py-24 bg-muted/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -63,13 +66,13 @@ export function Testimonials() {
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-accent/10 rounded-full mb-4">
             <Star className="w-4 h-4 text-accent" />
-            <span className="text-sm text-accent-foreground">Success Stories</span>
+            <span className="text-sm text-accent-foreground">{t('testimonials.badge')}</span>
           </div>
           <h2 className="text-4xl sm:text-5xl tracking-tight text-foreground mb-4">
-            What Our Investors Say
+            {t('testimonials.title')}
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Real testimonials from investors around the world
+            {t('testimonials.subtitle')}
           </p>
         </div>
 

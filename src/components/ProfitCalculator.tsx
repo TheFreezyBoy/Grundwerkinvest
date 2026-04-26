@@ -1,9 +1,11 @@
 'use client'
-import { useState } from 'react';
-import { Calculator, TrendingUp, DollarSign } from 'lucide-react';
+import { useState } from 'react'
+import { Calculator, TrendingUp, DollarSign } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 export function ProfitCalculator() {
-  const [investment, setInvestment] = useState(300000);
+  const t = useTranslations()
+  const [investment, setInvestment] = useState(300000)
   
   // Calculation constants
   const rentalYield = 0.065; // 6.5% annual rental yield
@@ -37,13 +39,13 @@ export function ProfitCalculator() {
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-accent/20 backdrop-blur-sm rounded-full mb-4">
             <Calculator className="w-4 h-4 text-accent" />
-            <span className="text-sm text-white">Profit Calculator</span>
+            <span className="text-sm text-white">{t('profitCalculator.badge')}</span>
           </div>
           <h2 className="text-4xl sm:text-5xl tracking-tight text-white mb-4">
-            Calculate Your Returns
+            {t('profitCalculator.title')}
           </h2>
           <p className="text-xl text-white/90 max-w-2xl mx-auto">
-            See your potential monthly income and long-term profits
+            {t('profitCalculator.subtitle')}
           </p>
         </div>
 

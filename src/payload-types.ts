@@ -93,8 +93,12 @@ export interface Config {
     defaultIDType: number;
   };
   fallbackLocale: ('false' | 'none' | 'null') | false | null | ('en' | 'de') | ('en' | 'de')[];
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    seo: Seo;
+  };
+  globalsSelect: {
+    seo: SeoSelect<false> | SeoSelect<true>;
+  };
   locale: 'en' | 'de';
   widgets: {
     collections: CollectionsWidget;
@@ -529,6 +533,69 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "seo".
+ */
+export interface Seo {
+  id: number;
+  /**
+   * Optimal: 50-60 Zeichen
+   */
+  title_de?: string | null;
+  /**
+   * Optimal: 150-160 Zeichen
+   */
+  description_de?: string | null;
+  /**
+   * Komma-getrennt
+   */
+  keywords_de?: string | null;
+  /**
+   * Optimal: 50-60 characters
+   */
+  title_en?: string | null;
+  /**
+   * Optimal: 150-160 characters
+   */
+  description_en?: string | null;
+  /**
+   * Comma-separated
+   */
+  keywords_en?: string | null;
+  ogImage?: (number | null) | Media;
+  siteName?: string | null;
+  twitterHandle?: string | null;
+  /**
+   * Base URL for canonical tags
+   */
+  canonicalUrl?: string | null;
+  robotsIndex?: boolean | null;
+  robotsFollow?: boolean | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "seo_select".
+ */
+export interface SeoSelect<T extends boolean = true> {
+  title_de?: T;
+  description_de?: T;
+  keywords_de?: T;
+  title_en?: T;
+  description_en?: T;
+  keywords_en?: T;
+  ogImage?: T;
+  siteName?: T;
+  twitterHandle?: T;
+  canonicalUrl?: T;
+  robotsIndex?: T;
+  robotsFollow?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
