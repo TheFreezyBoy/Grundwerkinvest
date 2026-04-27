@@ -117,7 +117,7 @@ export default async function Layout({ children }: { children: React.ReactNode }
                       <img src="/logo.svg" alt="Grundwerkinvest" className="w-9 h-9" />
                     </div>
                     <span className="text-lg font-semibold tracking-tight text-primary">
-                      Grundwerkinvest
+                      Grund Werk Invest
                     </span>
                   </Link>
 
