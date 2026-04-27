@@ -1,44 +1,35 @@
-# To use this Dockerfile, you have to set `output: 'standalone'` in your next.config.ts file.
-FROM node:22-bookworm-slim AS base
+FROM node:22-alpine AS base
 
-# 1. Install dependencies
+# 1. Dependencies
 FROM base AS deps
 WORKDIR /app
-
-RUN apt-get update && apt-get install -y python3 make g++ && rm -rf /var/lib/apt/lists/*
-
-COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
+RUN apk add --no-cache python3 make g++ libc6-compat
+COPY package.json package-lock.json* ./
 RUN npm ci --legacy-peer-deps
 
-# 2. Rebuild
+# 2. Builder
 FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-ENV NEXT_TELEMETRY_DISABLED 1
+ENV NEXT_TELEMETRY_DISABLED=1
 RUN npm run build
 
 # 3. Runner
 FROM base AS runner
 WORKDIR /app
-ENV NODE_ENV production
-ENV NEXT_TELEMETRY_DISABLED 1
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
 
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
+RUN addgroup --system --gid 1001 nodejs && adduser --system --uid 1001 nextjs
 
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/package.json ./package.json
-COPY --from=builder /app/tsconfig.json ./tsconfig.json
-COPY --from=builder /app/src ./src
-
-# Copy standalone build
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+COPY --from=builder --chown=nextjs:nodejs /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/src/migrations ./src/migrations
 
 USER nextjs
 EXPOSE 3000
-ENV PORT 3000
-ENV HOSTNAME "0.0.0.0"
-
 CMD ["node", "server.js"]
