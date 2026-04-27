@@ -21,7 +21,6 @@ if (!databaseUrl) {
   console.warn('DEBUG: DATABASE_URL is EMPTY!')
 } else {
   console.log('DEBUG: DATABASE_URL starts with:', databaseUrl.substring(0, 15))
-  console.log('DEBUG: DATABASE_URL length:', databaseUrl.length)
 }
 
 export default buildConfig({
@@ -32,8 +31,8 @@ export default buildConfig({
     },
   },
   localization: {
-    locales: ['en', 'de'], // required
-    defaultLocale: 'de', // required
+    locales: ['en', 'de'],
+    defaultLocale: 'ву',
   },
   collections: [Users, Media, Cities, Listings],
   globals: [SEO],
@@ -44,7 +43,7 @@ export default buildConfig({
   },
   db: postgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URL || '',
+      connectionString: databaseUrl,
     },
   }),
   sharp,
