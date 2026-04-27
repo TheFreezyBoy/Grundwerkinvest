@@ -22,8 +22,10 @@ export default async function ImpressumPage() {
             <div>
               <h2 className="text-xl mb-3">GWI – GRUND WERK INVEST</h2>
               <p className="text-muted-foreground leading-relaxed">
-                Alexander Unrein (Einzelunternehmen)<br />
-                Walter-Hümmer-Str. 10<br />
+                Alexander Unrein (Einzelunternehmen)
+                <br />
+                Walter-Hümmer-Str. 10
+                <br />
                 95152 Selbitz
               </p>
             </div>
@@ -44,14 +46,15 @@ export default async function ImpressumPage() {
             <div>
               <h3 className="text-lg mb-3">Kontakt</h3>
               <ul className="space-y-1 text-muted-foreground text-sm">
-                <li>T: +49 9280 7089 839</li>
-                <li>M: +49 173 419 43 04</li>
+                <li>
+                  <a href="tel:+4992807089839">T: +49 9280 7089 839</a>
+                </li>
+                <li>
+                  <a href="tel:+491734194304"> M: +49 173 419 43 04</a>
+                </li>
                 <li>
                   E-Mail:{' '}
-                  <a
-                    href="mailto:info@grundwerkinvest.de"
-                    className="text-accent hover:underline"
-                  >
+                  <a href="mailto:info@grundwerkinvest.de" className="text-accent hover:underline">
                     info@grundwerkinvest.de
                   </a>
                 </li>
@@ -62,14 +65,15 @@ export default async function ImpressumPage() {
               <h3 className="text-lg mb-3">Redaktionell verantwortlich</h3>
               <ul className="space-y-1 text-muted-foreground text-sm">
                 <li>Alexander Unrein</li>
-                <li>T: +49 9280 7089 839</li>
-                <li>M: +49 173 419 43 04</li>
+                <li>
+                  <a href="tel:+4992807089839">T: +49 9280 7089 839</a>
+                </li>
+                <li>
+                  <a href="tel:+491734194304">M: +49 173 419 43 04</a>
+                </li>
                 <li>
                   E-Mail:{' '}
-                  <a
-                    href="mailto:info@grundwerkinvest.de"
-                    className="text-accent hover:underline"
-                  >
+                  <a href="mailto:info@grundwerkinvest.de" className="text-accent hover:underline">
                     info@grundwerkinvest.de
                   </a>
                 </li>
