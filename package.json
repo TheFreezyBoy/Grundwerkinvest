@@ -11,7 +11,7 @@
     "extract:messages": "formatjs extract 'src/messages.ts' --out-file translations/en.json --id-interpolation-pattern '[id]' --format simple && node scripts/sync-translations.mjs",
     "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
     "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
-    "lint": "cross-env NODE_OPTIONS=--no-deprecation eslint .",
+    "migrate:prod": "payload migrate --force",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
     "test": "pnpm run test:int && pnpm run test:e2e",
