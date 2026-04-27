@@ -85,7 +85,7 @@ export default async function PropertiesPage({
       }),
     ])
 
-    const cities = citiesRes.docs.map((c: { id: string; name: string }) => ({ id: String(c.id), name: c.name }))
+    const cities = citiesRes.docs.map((c) => ({ id: String(c.id), name: c.name }))
     const { docs: properties, totalDocs, totalPages } = listingsRes
     const totalAvailable = totalAvailableRes.totalDocs
 
