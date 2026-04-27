@@ -14,15 +14,6 @@ import { SEO } from '@/globals/SEO'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-const rawDatabaseUrl = process.env.DATABASE_URL || ''
-const databaseUrl = rawDatabaseUrl.replace(/['"]/g, '').trim()
-
-if (!databaseUrl) {
-  console.warn('DEBUG: DATABASE_URL is EMPTY!')
-} else {
-  console.log('DEBUG: DATABASE_URL starts with:', databaseUrl.substring(0, 15))
-}
-
 export default buildConfig({
   admin: {
     user: Users.slug,
@@ -32,7 +23,7 @@ export default buildConfig({
   },
   localization: {
     locales: ['en', 'de'],
-    defaultLocale: 'ву',
+    defaultLocale: 'de',
   },
   collections: [Users, Media, Cities, Listings],
   globals: [SEO],
@@ -43,8 +34,9 @@ export default buildConfig({
   },
   db: postgresAdapter({
     pool: {
-      connectionString: databaseUrl,
+      connectionString: process.env.DATABASE_URL || '',
     },
+    push: true,
   }),
   sharp,
   plugins: [],
