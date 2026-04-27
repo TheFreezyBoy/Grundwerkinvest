@@ -16,6 +16,12 @@ import { de } from '@payloadcms/translations/languages/de'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
+if (!process.env.DATABASE_URL) {
+  console.warn('DEBUG: DATABASE_URL is not defined in environment variables!')
+} else {
+  console.log('DEBUG: DATABASE_URL is defined (length:', process.env.DATABASE_URL.length, ')')
+}
+
 export default buildConfig({
   admin: {
     user: Users.slug,
@@ -36,7 +42,7 @@ export default buildConfig({
   },
   db: postgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URI || '',
+      connectionString: process.env.DATABASE_URL || '',
     },
   }),
   sharp,
