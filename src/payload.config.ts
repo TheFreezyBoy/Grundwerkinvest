@@ -37,6 +37,7 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URL || '',
     },
     migrationDir: path.resolve(dirname, 'migrations'),
+    prodMigrations: (await import('./migrations/index')).migrations,
   }),
   sharp,
   plugins: [],
