@@ -31,14 +31,14 @@ COPY --from=builder /app/public ./public
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/tsconfig.json ./tsconfig.json
 COPY --from=builder /app/src ./src
+COPY --from=builder /app/node_modules ./node_modules
 
 # Copy standalone build
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 USER root
-# Скрипт-обертка для миграции и старта
-RUN echo '#!/bin/sh\nnode /app/node_modules/payload/bin/payload migrate --force\nnode server.js' > /app/start.sh && chmod +x /app/start.sh
+RUN echo '#!/bin/sh\nnode /app/node_modules/.bin/payload migrate\nnode server.js' > /app/start.sh && chmod +x /app/start.sh
 
 USER nextjs
 EXPOSE 3000
