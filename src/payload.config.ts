@@ -10,16 +10,18 @@ import { Media } from './collections/Media'
 import Cities from '@/collections/Cities'
 import Listings from '@/collections/Listings'
 import { SEO } from '@/globals/SEO'
-import { en } from '@payloadcms/translations/languages/en'
-import { de } from '@payloadcms/translations/languages/de'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-if (!process.env.DATABASE_URL) {
-  console.warn('DEBUG: DATABASE_URL is not defined in environment variables!')
+const rawDatabaseUrl = process.env.DATABASE_URL || ''
+const databaseUrl = rawDatabaseUrl.replace(/['"]/g, '').trim()
+
+if (!databaseUrl) {
+  console.warn('DEBUG: DATABASE_URL is EMPTY!')
 } else {
-  console.log('DEBUG: DATABASE_URL is defined (length:', process.env.DATABASE_URL.length, ')')
+  console.log('DEBUG: DATABASE_URL starts with:', databaseUrl.substring(0, 15))
+  console.log('DEBUG: DATABASE_URL length:', databaseUrl.length)
 }
 
 export default buildConfig({
@@ -31,7 +33,7 @@ export default buildConfig({
   },
   localization: {
     locales: ['en', 'de'], // required
-    defaultLocale: 'en', // required
+    defaultLocale: 'de', // required
   },
   collections: [Users, Media, Cities, Listings],
   globals: [SEO],
